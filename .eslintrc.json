@@ -1,3 +1,12 @@
 {
-  "extends": "next/core-web-vitals"
+  "extends": ["next", "eslint:recommended"],
+  "rules": {
+    // Your existing rules
+    // ...
+
+    // Enable all jsx-a11y rules
+    "jsx-a11y/anchor-has-content": "error",
+    "jsx-a11y/anchor-is-valid": "error"
+    // Add more rules here
+  }
 }
