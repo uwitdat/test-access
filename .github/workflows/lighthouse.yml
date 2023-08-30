@@ -14,7 +14,7 @@ jobs:
       - name: Prepare URLs
         id: prepare_urls
         run: |
-          echo "urls=${{ steps.get_pr_url.outputs.pr_url }}" >> $GITHUB_ENV
+          echo "::set-output name=urls::${{ steps.get_pr_url.outputs.pr_url }}"
       - name: Run Lighthouse
         id: lighthouse
         uses: foo-software/lighthouse-check-action@master
