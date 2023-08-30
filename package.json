@@ -15,7 +15,7 @@
     }
   },
   "lint-staged": {
-    "src/**/*.{js,jsx,ts,tsx,json,css,scss}": ["eslint", "prettier --write"]
+    "src/**/*.{ts,tsx}": ["eslint"]
   },
   "dependencies": {
     "@types/node": "20.5.6",
