@@ -28,7 +28,6 @@
   },
   "devDependencies": {
     "eslint": "^8.47.0",
-    "eslint-plugin-jsx-a11y": "^6.7.1",
-    "husky": "^8.0.3"
+    "eslint-plugin-jsx-a11y": "^6.7.1"
   }
 }
