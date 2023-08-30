@@ -10,7 +10,7 @@ export default function Home() {
       <img
         src="https://picsum.photos/id/237/536/354"
         style={{ height: '5px' }}
-        alt="work"
+        alt="yayA"
       />
     </main>
   );
