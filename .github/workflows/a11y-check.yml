@@ -16,10 +16,10 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: 14 # You can change this to your desired Node.js version
+          node-version: 18.16.1 # You can change this to your desired Node.js version
 
       - name: Install dependencies
         run: npm install
 
       - name: Run jsx-a11y checks
-        run: npx eslint --ext .js,.jsx src/ --plugin jsx-a11y
+        run: npx eslint --ext .ts,.tsx "src/**/*.{ts,tsx}" --plugin jsx-a11y
