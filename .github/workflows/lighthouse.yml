@@ -1,35 +1,30 @@
-name: Lighthouse Accessibility Check
-
-on:
-  pull_request:
-    types:
-      - opened
-      - synchronize
+name: Lighthouse Check
+on: pull_request
 
 jobs:
-  lighthouse:
+  lighthouse-check:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Get PR URL
-        id: pr_url
-        run: |
-          PR_URL="https://$GITHUB_REPOSITORY/pull/$PR_NUMBER"
-          echo "PR_URL=$PR_URL" >> $GITHUB_ENV
-        env:
-          PR_NUMBER: ${{ github.event.pull_request.number }}
-
-      - name: Install dependencies
-        run: npm install
-
+      - uses: actions/checkout@v2
+      - run: mkdir /tmp/artifacts
       - name: Run Lighthouse
-        run: npx lighthouse ${{ env.PR_URL }} --config-path=lighthouse-config.js --output json --output-path=lighthouse-report.json
-
-      - name: Upload Lighthouse Report
+        id: lighthouse
+        uses: foo-software/lighthouse-check-action@master
+        with:
+          outputDirectory: /tmp/artifacts
+          urls: ${{ steps.get_pr_url.outputs.pr_url }}
+      - name: Upload artifacts
         uses: actions/upload-artifact@v2
         with:
-          name: lighthouse-report
-          path: lighthouse-report.json
+          name: Lighthouse reports
+          path: /tmp/artifacts
+
+  get_pr_url:
+    runs-on: ubuntu-latest
+    outputs:
+      pr_url: ${{ steps.extract_pr_url.outputs.pr_url }}
+    steps:
+      - id: extract_pr_url
+        run: |
+          pr_url="${{ github.event.pull_request.html_url }}"
+          echo "pr_url=$pr_url" >> $GITHUB_ENV
