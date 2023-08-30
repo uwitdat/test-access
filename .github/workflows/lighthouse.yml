@@ -6,25 +6,23 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - name: Get PR URL
+        id: get_pr_url
+        run: |
+          echo "pr_url=${{ github.event.pull_request.html_url }}" >> $GITHUB_ENV
       - run: mkdir /tmp/artifacts
+      - name: Prepare URLs
+        id: prepare_urls
+        run: |
+          echo "urls=${{ steps.get_pr_url.outputs.pr_url }}" >> $GITHUB_ENV
       - name: Run Lighthouse
         id: lighthouse
         uses: foo-software/lighthouse-check-action@master
         with:
           outputDirectory: /tmp/artifacts
-          urls: ${{ steps.get_pr_url.outputs.pr_url }}
+          urls: ${{ steps.prepare_urls.outputs.urls }}
       - name: Upload artifacts
         uses: actions/upload-artifact@v2
         with:
           name: Lighthouse reports
           path: /tmp/artifacts
-
-  get_pr_url:
-    runs-on: ubuntu-latest
-    outputs:
-      pr_url: ${{ steps.extract_pr_url.outputs.pr_url }}
-    steps:
-      - id: extract_pr_url
-        run: |
-          pr_url="${{ github.event.pull_request.html_url }}"
-          echo "pr_url=$pr_url" >> $GITHUB_ENV
