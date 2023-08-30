@@ -1,28 +1,19 @@
 name: Lighthouse Check
-on: pull_request
+on: [pull_request]
 
 jobs:
   lighthouse-check:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - name: Get PR URL
-        id: get_pr_url
-        run: |
-          echo "pr_url=${{ github.event.pull_request.html_url }}" >> $GITHUB_ENV
+      - uses: actions/checkout@master
       - run: mkdir /tmp/artifacts
-      - name: Prepare URLs
-        id: prepare_urls
-        run: |
-          echo "::set-output name=urls::${{ steps.get_pr_url.outputs.pr_url }}"
       - name: Run Lighthouse
-        id: lighthouse
         uses: foo-software/lighthouse-check-action@master
         with:
           outputDirectory: /tmp/artifacts
-          urls: ${{ steps.prepare_urls.outputs.urls }}
+          urls: 'https://www.benshekhtman.io'
       - name: Upload artifacts
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@master
         with:
           name: Lighthouse reports
           path: /tmp/artifacts
