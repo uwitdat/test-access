@@ -8,6 +8,11 @@
     "start": "next start",
     "lint": "next lint"
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "eslint"
+    }
+  },
   "dependencies": {
     "@types/node": "20.5.6",
     "@types/react": "18.2.21",
